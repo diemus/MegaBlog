@@ -14,5 +14,5 @@
 
 ##使用
 需要安装如下模块：
-  Django
-  Pillow
+    Django
+    Pillow
