@@ -1,0 +1,15 @@
+{% for i in nav_list %}
+    {% if request.path == i.path %}
+        <li class="active">
+    {% else %}
+        <li>
+    {% endif %}
+            <a href="{{ i.path }}">
+                <i class="{{ i.icon }}"></i>
+                <span class="title">{{ i.caption }}</span>
+                {% if request.path == i.path %}
+                    <span class="selected"></span>
+                {% endif %}
+            </a>
+        </li>
+{% endfor %}

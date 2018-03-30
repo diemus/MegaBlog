@@ -1,0 +1,35 @@
+<div class="row-fluid">
+    <div class="span6">
+        <div class="dataTables_info" id="sample_1_info">
+           第{{ page_obj.number }}页，共{{ page_obj.paginator.num_pages }}页
+        </div>
+    </div>
+    <div class="span6">
+        <div class="dataTables_paginate paging_bootstrap pagination">
+            <ul>
+                <li><a href="?page=1">&laquo;</a></li>
+                {% if page_obj.has_previous %}
+                    <li class="prev"><a href="?page={{ page_obj.previous_page_number }}">上一页</a></li>
+                {% else %}
+                    <li><a class="colorGray" aria-disabled="false">上一页</a></li>
+                {% endif %}
+
+                {% for p in page_range %}
+                    {% ifequal p page_obj.number %}
+                        <li class="active"><a>{{ p }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ p }}" title="第{{ p }}页">{{ p }}</a></li>
+                    {% endifequal %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="next"><a href="?page={{ page_obj.next_page_number }}">后一页</a></li>
+                {% else %}
+                    <li><a class="colorGray" aria-disabled="false">后一页</a></li>
+                {% endif %}
+
+                <li><a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

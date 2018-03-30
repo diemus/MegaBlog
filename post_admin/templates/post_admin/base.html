@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8"/>
+    <title>管理中心</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="/static/plugins/metronic/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/plugins/metronic/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/plugins/metronic/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/plugins/metronic/css/style-metro.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/plugins/metronic/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/plugins/metronic/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/plugins/metronic/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+    <link href="/static/plugins/metronic/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <link href="/static/css/PostAdmin.css" rel="stylesheet" type="text/css"/>
+    <!-- END PAGE LEVEL STYLES -->
+
+    {% block css %} {% endblock %}
+
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="/static/plugins/metronic/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+    <script src="/static/plugins/metronic/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+
+    <!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="/static/plugins/metronic/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <script src="/static/plugins/metronic/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/static/plugins/metronic/js/jquery.uniform.min.js" type="text/javascript" ></script>
+    <!-- END CORE PLUGINS -->
+
+
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="/static/plugins/metronic/js/app.js" type="text/javascript"></script>
+    <script src="/static/plugins/metronic/js/index.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        jQuery(document).ready(function () {
+            App.init(); // initlayout and core plugins
+            Index.init();
+
+            $("#user_upload_avatar").on('change', function () {
+                $("#avatar_img").attr('src', '/static/image/tiny-white.gif');
+                $("#user_upload_avatar_form").submit();
+            });
+
+        });
+
+    </script>
+
+    {% block js %}{% endblock %}
+
+    <link rel="shortcut icon" href="/static/plugins/metronic/image/favicon.ico"/>
+</head>
+<body class="page-header-fixed">
+
+<!-- BEGIN HEADER -->
+
+<div class="header navbar navbar-inverse navbar-fixed-top">
+
+    <!-- BEGIN TOP NAVIGATION BAR -->
+
+    <div class="navbar-inner">
+
+        <div class="container-fluid">
+
+            <!-- BEGIN LOGO -->
+
+            <a class="brand" href="/">
+
+                <img src="/static/plugins/metronic/image/logo.png" alt="logo"/>
+
+            </a>
+
+            <!-- END LOGO -->
+
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+
+            <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+
+                <img src="/static/plugins/metronic/image/menu-toggler.png" alt=""/>
+
+            </a>
+
+            <!-- END RESPONSIVE MENU TOGGLER -->
+
+            <!-- BEGIN TOP NAVIGATION MENU -->
+
+            <ul class="nav pull-right">
+
+                <!-- BEGIN USER LOGIN DROPDOWN -->
+
+                <li class="dropdown user">
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <div class="avatar">
+                            <img alt="" id="avatar_img" src="{{ user.avatar_path }}"/>
+                        </div>
+                        <span class="username">{{ user.name }}</span>
+
+                        <i class="icon-angle-down"></i>
+
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/"><i class="icon-edit"></i> 返回主页</a></li>
+                        <li>
+                            <a href="javascript:void(0)"><i class="icon-camera-retro"></i>
+                                <form action="/admin/set/upload/avatar" enctype="multipart/form-data" id="user_upload_avatar_form" method="post">
+                                    {% csrf_token %}
+                                    <input  accept="image/*" class="hidden-field" type="file" name="avatar" id="user_upload_avatar">
+                                </form>更改头像
+                            </a>
+                        </li>
+                        <li><a href="/admin/password_change/"><i class="icon-edit"></i> 修改密码</a></li>
+                        <li><a href="logout"><i class="icon-key"></i> 退出</a></li>
+                    </ul>
+
+                </li>
+                <!-- END USER LOGIN DROPDOWN -->
+
+            </ul>
+
+            <!-- END TOP NAVIGATION MENU -->
+
+        </div>
+
+    </div>
+
+    <!-- END TOP NAVIGATION BAR -->
+
+</div>
+
+<!-- END HEADER -->
+<!-- BEGIN CONTAINER -->
+
+
+<div class="page-container">
+
+    <!-- BEGIN SIDEBAR -->
+
+    <div class="page-sidebar nav-collapse collapse">
+
+        <!-- BEGIN SIDEBAR MENU -->
+
+        <ul class="page-sidebar-menu">
+
+            <li class="admin_start">
+
+                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+
+                <div class="sidebar-toggler hidden-phone"></div>
+
+                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+
+            </li>
+
+
+            {% include 'post_admin/include/nav_left.html' %}
+        </ul>
+
+        <!-- END SIDEBAR MENU -->
+
+    </div>
+
+    <!-- END SIDEBAR -->
+
+</div>
+
+<!-- END CONTAINER -->
+
+<!-- BEGIN PAGE -->
+<div class="page-content">
+
+    {% block main %}{% endblock %}
+
+</div>
+<!-- END PAGE -->
+
+<!-- BEGIN FOOTER -->
+<footer>
+<div class="footer">
+
+    <div class="footer-inner">
+
+        2016 &copy; Metronic by keenthemes.
+
+    </div>
+
+    <div class="footer-tools">
+
+			<span class="go-top">
+
+			<i class="icon-angle-up"></i>
+
+			</span>
+
+    </div>
+
+</div>
+</footer>
+
+<!-- END FOOTER -->
+
+</div>
+
+</body>
+
+</html>
